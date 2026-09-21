@@ -8,3 +8,59 @@ spring:
 app:
   branch-name: Nha Thuoc So 1
   hotline: 1900 9999
+
+pharmacy:
+  vat-rate: 0.10
+
+resilience4j:
+  circuitbreaker:
+    circuit-breaker-aspect-order: 2
+    instances:
+      warehouseCB:
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 5
+        wait-duration-in-open-state: 20s
+        sliding-window-size: 10
+        sliding-window-type: COUNT_BASED
+        permitted-number-of-calls-in-half-open-state: 2
+        automatic-transition-from-open-to-half-open-enabled: true
+      insuranceCB:
+        failure-rate-threshold: 60
+        minimum-number-of-calls: 5
+        wait-duration-in-open-state: 15s
+        sliding-window-size: 10
+        sliding-window-type: COUNT_BASED
+        permitted-number-of-calls-in-half-open-state: 2
+        automatic-transition-from-open-to-half-open-enabled: true
+  ratelimiter:
+    rate-limiter-aspect-order: 1
+    instances:
+      invoiceRateLimiter:
+        limit-for-period: 5
+        limit-refresh-period: 10s
+        timeout-duration: 0
+  retry:
+    retry-aspect-order: 3
+    instances:
+      invoiceRetry:
+        max-attempts: 3
+        wait-duration: 2s
+        retry-exceptions:
+          - java.net.ConnectException
+          - org.springframework.web.client.ResourceAccessException
+          - java.io.IOException
+          - java.lang.RuntimeException
+      insuranceRetry:
+        max-attempts: 3
+        wait-duration: 2s
+        retry-exceptions:
+          - java.net.ConnectException
+          - org.springframework.web.client.ResourceAccessException
+          - java.io.IOException
+          - java.lang.RuntimeException
+  timelimiter:
+    time-limiter-aspect-order: 4
+    instances:
+      insuranceTimeout:
+        timeout-duration: 3s
+        cancel-running-future: true
