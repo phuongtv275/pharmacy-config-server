@@ -10,7 +10,7 @@ app:
   hotline: 1900 9999
 
 pharmacy:
-  vat-rate: 0.10
+  vat-rate: 0.08
 
 resilience4j:
   circuitbreaker:
