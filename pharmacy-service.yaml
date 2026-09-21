@@ -62,5 +62,5 @@ resilience4j:
     time-limiter-aspect-order: 4
     instances:
       insuranceTimeout:
-        timeout-duration: 3s
+        timeout-duration: 1s
         cancel-running-future: true
