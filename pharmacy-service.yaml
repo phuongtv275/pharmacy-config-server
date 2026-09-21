@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pharmacy_db
+    username: ${DB_USERNAME:rikkei}
+    password: ${DB_PASSWORD:rikkei}
+    driver-class-name: org.postgresql.Driver
+
+app:
+  branch-name: Nha Thuoc So 1
+  hotline: 1900 9999
